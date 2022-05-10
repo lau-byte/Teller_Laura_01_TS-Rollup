@@ -1,6 +1,9 @@
 //Fremdcode: Alle memore-card Elemente werden als Karten definiert.
 const cards = document.querySelectorAll('.memory-card');
 
+//Die Audio-Datei wird in der Konstanten x gespeichert.
+const x = document.getElementById("cardSound");
+
 //Fremdcode: Die Variable hasFlippedCard wird standardgemäß auf falsch gesetzt.
 let hasFlippedCard = false;
 
@@ -12,6 +15,8 @@ let firstCard, secondCard;
 
 //Fremdcode: Die Klasse flip wird getoggled. Wenn sie nicht da ist, wird sie hinzugefügt, wenn sie da ist, wird sie entfernt.
 function flipCard() {
+    //Die Audio-Datei wird abgespielt, sobald eine Karte umgedreht wird.
+    x.play();
     //Fremdcode: Wenn lockBoard true ist, wird der Rest der Funktion nicht ausgeführt, da das Board ja gesperrt ist.
     if (lockBoard) return;
     //Fremdcode: Wenn die angeklickte Karte die erste ist die angeklickt wurde, wird der restliche Code der Funktion nicht ausgeführt.
@@ -79,6 +84,11 @@ function resetBoard() {
         card.style.order = randomPos;
     });
 })();
+
+//Funktion erstellt, durch die die Audio-Datei abgespielt wird.
+function playAudio() {
+    x.play();
+}
 
 //Fremdcode: Für jede Karte wird ein Event Listener hinzugefügt: Bei einem Klick-Event wird die Funktion flipCard ausgeführt.
 cards.forEach(card => card.addEventListener('click', flipCard));
