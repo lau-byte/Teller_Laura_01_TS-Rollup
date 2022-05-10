@@ -1,8 +1,14 @@
 //Fremdcode: Alle memore-card Elemente werden als Karten definiert.
 const cards = document.querySelectorAll('.memory-card');
 
-//Die Audio-Datei wird in der Konstanten x gespeichert.
-const x = document.getElementById("cardSound");
+//Die Audio-Datei wird in der Konstanten flipSound gespeichert.
+const flipSound = document.getElementById("cardSound");
+
+//s.o.
+const matchSound = document.getElementById("matchSound");
+
+//s.o.
+const noMatch = document.getElementById("noMatch");
 
 //Fremdcode: Die Variable hasFlippedCard wird standardgemäß auf falsch gesetzt.
 let hasFlippedCard = false;
@@ -16,7 +22,7 @@ let firstCard, secondCard;
 //Fremdcode: Die Klasse flip wird getoggled. Wenn sie nicht da ist, wird sie hinzugefügt, wenn sie da ist, wird sie entfernt.
 function flipCard() {
     //Die Audio-Datei wird abgespielt, sobald eine Karte umgedreht wird.
-    x.play();
+    flipSound.play();
     //Fremdcode: Wenn lockBoard true ist, wird der Rest der Funktion nicht ausgeführt, da das Board ja gesperrt ist.
     if (lockBoard) return;
     //Fremdcode: Wenn die angeklickte Karte die erste ist die angeklickt wurde, wird der restliche Code der Funktion nicht ausgeführt.
@@ -42,13 +48,17 @@ function checkForMatch() {
  //Fremdcode: Checken ob Karten identisch sind: Durch dataset kann man data-framework Attribut der HTML abrufen.
     if(firstCard.dataset.framework === secondCard.dataset.framework) {
         disableCards();
+        //Die Audio-Datei wird nach einer Verzögerung von 500ms abgespielt, wenn zwei umgedrehte Karten identisch sind.
+        setTimeout(() => {
+            playAudio2();
+        }, 500);
     } else {
         unflipCards();
     }
 }
 
 function disableCards() {
-    //Wenn Karten (also data-framework Daten) identisch sind, wird der EventListener von beiden entfernt.
+    //Fremdcode: Wenn Karten (also data-framework Daten) identisch sind, wird der EventListener von beiden entfernt.
     firstCard.removeEventListener('click', flipCard);
     secondCard.removeEventListener('click', flipCard);
 
@@ -59,21 +69,21 @@ function unflipCards() {
     //Fremdcode: Während die Karten wieder zugedeckt werden wird das Board gesperrt, damit der Spieler währenddessen nicht neue Karten aufdecken kann.
     lockBoard = true;
     
-    //Fremdcode: Timeout hinzufügen: Es dauert nach dem Aufdecken beider Karten 1,5 Sekunden bis die else-Schleife ausgeführt wird.
+    //Fremdcode: Timeout hinzufügen: Es dauert nach dem Aufdecken beider Karten 1 Sekunde bis die else-Schleife ausgeführt wird.
     setTimeout(() => {
-        //Wenn Karten verschieden sind, wird die Klasse flip von ihnen entfernt.
+        //Wenn Karten verschieden sind, wird die Audio-Datei ausgeführt und die Klasse flip von ihnen entfernt.
+            playAudio3();
             firstCard.classList.remove('flip');
             secondCard.classList.remove('flip');
 
             
             resetBoard();
-        }, 1500);
+        }, 1000);
 }
 
 function resetBoard() {
     //Fremdcode: Die Variable hasFlippedCard wird auf falsch gesetzt. Das Board wird entsperrt.
     [hasFlippedCard, lockBoard] = [false, false];
-    //Fremdcode: 
     [firstCard, secondCard] = [null, null];
 }
 
@@ -87,7 +97,17 @@ function resetBoard() {
 
 //Funktion erstellt, durch die die Audio-Datei abgespielt wird.
 function playAudio() {
-    x.play();
+    flipSound.play();
+}
+
+//Funktion für die zweite Audio-Datei
+function playAudio2() {
+    matchSound.play();
+}
+
+//Funktion für die dritte Audio-Datei
+function playAudio3() {
+    noMatch.play();
 }
 
 //Fremdcode: Für jede Karte wird ein Event Listener hinzugefügt: Bei einem Klick-Event wird die Funktion flipCard ausgeführt.
