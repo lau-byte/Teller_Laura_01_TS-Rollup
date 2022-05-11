@@ -40,13 +40,13 @@ function flipCard() {
 
         //Fremdcode: Der zweite Klick wird durchgeführt. Die Karte, die angeklickt wurde ist die secondCard.
         secondCard = this;
-
+        
         checkForMatch();
 
-     //Wenn es keine weiteren Karten zum Umdrehen gibt ist das Spiel gewonnen und ein entsprechender Alert wird angezeigt.
+     //Wenn es keine weiteren Karten zum Umdrehen gibt ist das Spiel gewonnen. Es wird ein Pop-Up angezeigt und die Wahl gegeben ob der Spieler noch eine Runde spielen möchte. Wenn er auf "OK" drückt, lädt die Seite nochmal. Wenn er auf abbrechen klickt, soll ein Textfeld eingeblendet werden (noch in Arbeit).
     if (!document.querySelectorAll('.memory-card:not(.flip)').length) {
     setTimeout(() => {
-        alert("You won!");
+        PlayAgain();
         }, 1000)
     }
 }
@@ -115,6 +115,16 @@ function playAudio2() {
 //Funktion für die dritte Audio-Datei
 function playAudio3() {
     noMatch.play();
+}
+
+//Funktion um das Spiel neu zu starten nach dem Gewinnen (indem die Seite neu geladen wird)
+function PlayAgain() {
+    if (confirm("You won! Wanna play again?")) {
+        location.reload();
+    } else {
+        txt = "This game is over.";
+    }
+    document.getElementById("GameOver").innerHTML = txt;
 }
 
 //Fremdcode: Für jede Karte wird ein Event Listener hinzugefügt: Bei einem Klick-Event wird die Funktion flipCard ausgeführt.
