@@ -42,6 +42,13 @@ function flipCard() {
         secondCard = this;
 
         checkForMatch();
+
+     //Wenn es keine weiteren Karten zum Umdrehen gibt ist das Spiel gewonnen und ein entsprechender Alert wird angezeigt.
+    if (!document.querySelectorAll('.memory-card:not(.flip)').length) {
+    setTimeout(() => {
+        alert("You won!");
+        }, 1000)
+    }
 }
 
 function checkForMatch() {
