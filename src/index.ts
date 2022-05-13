@@ -2,13 +2,13 @@
 
 import { helloWorld, Beispiel } from "./myModule";
 import { alertMe } from "./myOtherModule";
-import { flipCard } from "./app";
+import { startMemoryGame } from "./app";
 
 console.log(helloWorld);
 customElements.define("my-beispiel", Beispiel);
 
 alertMe();
-flipCard();
+startMemoryGame();
 const myInputValue = document.querySelector<HTMLInputElement>("#myInput");
 
 const myInputValueAlternate = document.querySelector(
